@@ -18,7 +18,7 @@
 ### 单元测试：
 1. 使用Postman工具
 2. GET API: 选择GET请求，http://IP地址:5001/server/getAppoint
-3. POST API: 选择POST请求，http://IP地址:5001/server/addAppoint.Body中填写信息，例如：
+3. POST API: 选择POST请求，http://IP地址:5001/server/addAppoint,格式选择JSON(application/json),Body中填写信息，例如：
     {
         "dateFrom":"2020-02-19 14:00:00",
         "dateTo":"2020-02-19 15:00:00",
