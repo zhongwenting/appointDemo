@@ -10,7 +10,8 @@ var async = require('async');
  */
 router.get('/getAppoint', async (req, res) => {
     logInfo({ 'app': 'appointDemo', 'api': 'getAppoint', 'ip': req.ip, 'param': req.body });
-    let sql = `SELECT date_from AS dateFrom, date_to AS dateTo, quantity FROM appoint where date_from BETWEEN date_add(now(), interval 1 day) AND date_add(now(), interval 7 day)`;
+    let sql = `SELECT date_from AS dateFrom, date_to AS dateTo, quantity FROM appoint 
+    where date_from BETWEEN now() AND date_add(now(), interval 8 day)`;
     async.waterfall(
         [
             async callback => {
@@ -63,7 +64,7 @@ router.post('/addAppoint', async (req, res) => {
     logInfo({ 'app': 'appointDemo', 'api': 'addAppoint', 'ip': req.ip, 'param': req.body });
     let param = req.body;
     let startDay = moment().add(1, 'days').format("YYYY-MM-DD");
-    let endDay = moment().add(7, 'days').format("YYYY-MM-DD");
+    let endDay = moment().add(8, 'days').format("YYYY-MM-DD");
     let h1 = param.dateFrom.slice(11, 12) === '0' ? param.dateFrom.slice(12, 13) : param.dateFrom.slice(11, 13);
     let h2 = param.dateTo.slice(11, 12) === '0' ? param.dateTo.slice(12, 13) : param.dateTo.slice(11, 13);
     if (parseInt(h2) - parseInt(h1) !== 1) {
