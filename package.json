@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node app.jsx  --presets es2015,stage-0"
+    "start": "babel-node app.js  --presets es2015,stage-0"
   },
   "author": "zhongwenting",
   "dependencies": {
