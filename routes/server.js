@@ -11,7 +11,8 @@ var async = require('async');
 router.get('/getAppoint', async (req, res) => {
     logInfo({ 'app': 'appointDemo', 'api': 'getAppoint', 'ip': req.ip, 'param': req.body });
     let sql = `SELECT date_from AS dateFrom, date_to AS dateTo, quantity FROM appoint 
-    where date_from BETWEEN now() AND date_add(now(), interval 8 day)`;
+    where date_from BETWEEN date_add(date_format(now(), '%Y-%m-%d'), interval 1 day) 
+    AND date_add(date_format(now(), '%Y-%m-%d'), interval 8 day)`;
     async.waterfall(
         [
             async callback => {
