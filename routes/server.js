@@ -96,7 +96,7 @@ router.post('/addAppoint', async (req, res) => {
                     if (datasource.length > 0) {
                         if (datasource[0].quantity === 0) {
                             //非预约状态下，访问链接不可用，不存在（个人认为不建议用40x状态码，4xx一般为客户端请求错误，而这是正常的请求，应该返回200或者500，给客户一个提示就可）
-                            callback({resStatus: 404, sqlMessage: '该时间段已约满！'}, datasource)
+                            callback({resStatus: 409, sqlMessage: '该时间段已约满！'}, datasource)
                         } else {
                             sql1 = `UPDATE appoint SET updated_by = ?,quantity = quantity-1 WHERE date_from=? AND date_to=?;`;
                             sqlParam1 = [1, param.dateFrom, param.dateTo];
@@ -125,7 +125,10 @@ router.post('/addAppoint', async (req, res) => {
                     logInfo({ 'app': 'appointDemo', 'api': 'addAppoint', message: 'error', 'sqlMessage': err.sqlMessage });
                     conn.rollback();
                     conn.release();
-                    res.json({ status: isEmpty(err.resStatus) ? 500 : err.resStatus, message: err.sqlMessage })
+                    if (!isEmpty(err.resStatus)) {
+                        res.status(409);
+                    } 
+                    res.json({ status: isEmpty(err.resStatus) ? 500 : err.resStatus, message: err.sqlMessage });
                 }
             }
         )
